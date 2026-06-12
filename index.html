@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đang tải dữ liệu...</title>
+    <style>
+        /* Căn giữa toàn bộ nội dung */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f5f7;
+        }
+        /* Tạo hiệu ứng vòng xoay loading */
+        .loader {
+            border: 6px solid #e0e0e0;
+            border-top: 6px solid #3370ff; /* Màu xanh đặc trưng của Lark */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .message {
+            font-size: 16px;
+            color: #333;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .countdown-text {
+            font-weight: bold;
+            color: #3370ff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loader"></div>
+    <div class="message">
+        Hệ thống đang xử lý dữ liệu. <br><br>
+        Sẽ tự động chuyển đến Larksuite sau <span id="countdown" class="countdown-text">10</span> giây...
+    </div>
+
+    <script>
+        // Link Larksuite cần chuyển hướng tới
+        const targetUrl = "https://upbasevn.sg.larksuite.com/base/Z4NSbVXYrasZkQsct1qlMRfNgQf?table=tbll5QBqBQsgnyda&view=vewKtcl7sl";
+        
+        let timeLeft = 10;
+        const countdownElement = document.getElementById('countdown');
+        
+        // Hàm đếm ngược mỗi giây
+        const timer = setInterval(() => {
+            timeLeft--;
+            countdownElement.textContent = timeLeft;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                window.location.href = targetUrl; // Thực hiện chuyển trang
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
