@@ -1,72 +1,91 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đang tải dữ liệu...</title>
+    <title>Processing...</title>
     <style>
-        /* Căn giữa toàn bộ nội dung */
-        body {
+        /* Cài đặt nền tràn màn hình và căn giữa */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0f172a;
             display: flex;
-            flex-direction: column;
+            flex-direction: column; /* Sắp xếp vòng xoay và chữ theo chiều dọc */
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f5f7;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        /* Tạo hiệu ứng vòng xoay loading */
+
+        /* Hiệu ứng vòng xoay bên ngoài */
         .loader {
-            border: 6px solid #e0e0e0;
-            border-top: 6px solid #3370ff; /* Màu xanh đặc trưng của Lark */
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
+            border: 4px solid transparent;
+            border-top-color: #3b82f6;
+            border-bottom-color: #3b82f6;
+            animation: spin 1.5s linear infinite;
+            position: relative;
+            margin-bottom: 30px; /* Khoảng cách giữa vòng xoay và chữ */
         }
+
+        /* Hiệu ứng vòng xoay bên trong */
+        .loader::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            border-left-color: #38bdf8;
+            border-right-color: #38bdf8;
+            animation: spin-reverse 1s linear infinite;
+        }
+
+        /* Chữ hiển thị */
+        .loading-text {
+            color: #e2e8f0; /* Màu xám trắng hiện đại */
+            font-size: 18px;
+            letter-spacing: 1.5px;
+            animation: pulse 1.5s infinite; /* Hiệu ứng chớp tắt nhẹ nhàng */
+        }
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        .message {
-            font-size: 16px;
-            color: #333;
-            text-align: center;
-            padding: 0 20px;
+
+        @keyframes spin-reverse {
+            0% { transform: rotate(360deg); }
+            100% { transform: rotate(0deg); }
         }
-        .countdown-text {
-            font-weight: bold;
-            color: #3370ff;
+
+        /* Hiệu ứng nhịp đập cho chữ */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
     </style>
 </head>
 <body>
 
     <div class="loader"></div>
-    <div class="message">
-        Hệ thống đang xử lý dữ liệu. <br><br>
-        Sẽ tự động chuyển đến Larksuite sau <span id="countdown" class="countdown-text">10</span> giây...
-    </div>
+    <div class="loading-text">We are Processing your feedback...</div>
 
     <script>
-        // Link Larksuite cần chuyển hướng tới
+        // Link Larksuite đích
         const targetUrl = "https://upbasevn.sg.larksuite.com/base/Z4NSbVXYrasZkQsct1qlMRfNgQf?table=tbll5QBqBQsgnyda&view=vewKtcl7sl";
         
-        let timeLeft = 10;
-        const countdownElement = document.getElementById('countdown');
-        
-        // Hàm đếm ngược mỗi giây
-        const timer = setInterval(() => {
-            timeLeft--;
-            countdownElement.textContent = timeLeft;
-            
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                window.location.href = targetUrl; // Thực hiện chuyển trang
-            }
-        }, 1000);
+        // Tự động chuyển hướng sau 5000 mili-giây (5 giây)
+        setTimeout(() => {
+            window.location.href = targetUrl;
+        }, 5000);
     </script>
 
 </body>
